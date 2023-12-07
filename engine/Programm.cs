@@ -1,29 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace TestLogic
+class Program
 {
-    class Program
-    {
     static void Main()
+    {
+        Question[] questions = QuestionReader.ReadQuestions("questions.txt");
+
+        // Выводим первые десять вопросов
+        for (int i = 0; i < Math.Min(10, questions.Length); i++)
         {
-        string[] questions = new string[84]; // Заполните вопросами
-        int[] keys = new int[84]; // Заполните ключами
-        bool[] insincerityQuestions = new bool[84]; // Заполните, какие вопросы увеличивают шкалу неискренности
-
-        TestLogic test = new TestLogic(questions, keys, insincerityQuestions);
-
-        for (int i = 0; i < questions.Length; i++)
-            {
-            Console.WriteLine(test.GetQuestion(i));
-            string userAnswer = Console.ReadLine();
-            test.SubmitAnswer(i, userAnswer);
-            }
-
-        Console.WriteLine("Тест завершен. Ваш счет: " + test.Score);
-        Console.WriteLine("Шкала неискренности: " + test.InsincerityScore);
+            Console.WriteLine("Вопрос " + (i + 1) + ": " + questions[i].Text);
+            Console.WriteLine();
         }
     }
 }
