@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace engine
 {
-    public class Test
+   public class Test
 {
-    private Question[] questions;
-    private int currentQuestionIndex = 0;
+    private List<Question> questions;
+    public int CurrentQuestionIndex { get; private set; } = 0;
     private int score = 0;
 
     public Test(string filename)
@@ -18,9 +18,9 @@ namespace engine
 
     public Question GetCurrentQuestion()
     {
-        if (currentQuestionIndex < questions.Length)
+        if (CurrentQuestionIndex < questions.Count)
         {
-            return questions[currentQuestionIndex];
+            return questions[CurrentQuestionIndex];
         }
         else
         {
@@ -37,14 +37,24 @@ namespace engine
     {
         if (answer)
         {
-            score += questions[currentQuestionIndex].Value;
+            score += questions[CurrentQuestionIndex].Value;
         }
         else
         {
-            score -= questions[currentQuestionIndex].Value;
+            score -= questions[CurrentQuestionIndex].Value;
         }
 
-        currentQuestionIndex++;
+        CurrentQuestionIndex++;
+    }
+
+    public int GetSincerityScore()
+    {
+        return questions.Where(q => q.Value == -1).Sum(q => q.Value);
+    }
+
+    public int GetTotalScore()
+    {
+        return questions.Sum(q => q.Value);
     }
 }
 }

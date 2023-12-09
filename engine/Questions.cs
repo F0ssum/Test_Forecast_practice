@@ -7,4 +7,17 @@ public class Question
     {
         Text = text;
     }
+
+    // Добавляем функцию для обработки ответов
+    public void AnswerQuestion(bool answer)
+    {
+        if (answer)
+        {
+            Value += 1;
+        }
+        else
+        {
+            Value -= 1;
+        }
+    }
 }
