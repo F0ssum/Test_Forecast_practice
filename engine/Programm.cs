@@ -1,41 +1,54 @@
 using System;
-using System.Collections.Generic;
 using engine;
 
 class Program
 {
     static void Main()
     {
+        Console.InputEncoding = System.Text.Encoding.UTF8;
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
         Test test = new Test("questions.txt");
 
         // Выводим вопросы по одному
         for (int i = 0; i < 10; i++)
         {
             Question question = test.GetCurrentQuestion();
-            Console.WriteLine("Вопрос " + (i + 1) + ": " + question.Text);
-            Console.Write("Введите ответ (да/нет): ");
-            string answer = Console.ReadLine().ToLower();
 
-            // Обрабатываем ответ
+            // Здесь вы можете добавить свой код для отображения вопроса пользователю
+
+            // Предположим, что answer получает значение в результате нажатия кнопки
+            string answer = GetAnswerFromButtonPress();
+
             if (answer == "да")
             {
-                question.AnswerQuestion(true);
+                HandleYesAnswer(question);
             }
             else if (answer == "нет")
             {
-                question.AnswerQuestion(false);
+                HandleNoAnswer(question);
             }
             else
             {
-                Console.WriteLine("Неверный формат ответа. Пожалуйста, введите 'да' или 'нет'.");
-                i--; // Повторяем вопрос
+                // Здесь вы можете добавить свой код для обработки некорректного ввода
             }
-
-            Console.WriteLine();
         }
 
-        // Выводим общий результат
-        Console.WriteLine("Шкала искренности: " + test.GetSincerityScore());
-        Console.WriteLine("Общий счет: " + test.GetTotalScore());
+        // Здесь вы можете добавить свой код для отображения результатов теста
+    }
+
+    static void HandleYesAnswer(Question question)
+    {
+        question.AnswerQuestion(true);
+    }
+
+    static void HandleNoAnswer(Question question)
+    {
+        question.AnswerQuestion(false);
+    }
+
+    static string GetAnswerFromButtonPress()
+    {
+        // Здесь вы можете добавить свой код для обработки нажатия кнопки
+        return "";
     }
 }
