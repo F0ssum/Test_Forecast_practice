@@ -13,7 +13,6 @@ public class QuestionReader
 
         string[] lines = File.ReadAllLines(filename);
         string[] updatedLines = lines.Select(line => line.Length > 3 ? line.Substring(3) : "").ToArray();
-        File.WriteAllLines(filename, updatedLines);
 
         Question[] questions = new Question[updatedLines.Length];
 
