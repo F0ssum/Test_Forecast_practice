@@ -33,28 +33,45 @@ namespace engine
         return score;
     }
 
-    public void AnswerQuestion(bool answer)
-    {
-        if (answer)
+        public void AnswerQuestion(Question question, bool answer)
         {
-            score += questions[CurrentQuestionIndex].Value;
+            question.UserAnswer = answer;
+
+            if (question.Value == -1)
+            {
+                // Обработка вопросов, связанных с искренностью
+                if (answer)
+                {
+                    score -= 1;
+                }
+                else
+                {
+                    score += 1;
+                }
+            }
+            else
+            {
+                // Обработка всех остальных вопросов
+                if (answer)
+                {
+                    score += question.Value;
+                }
+                else
+                {
+                    score -= question.Value;
+                }
+            }
+
+            CurrentQuestionIndex++;
         }
-        else
+
+        public int GetSincerityScore()
         {
-            score -= questions[CurrentQuestionIndex].Value;
+            return questions.Take(CurrentQuestionIndex).Where(q => q.Value == -1 && q.UserAnswer.HasValue).Sum(q => q.UserAnswer.Value ? -1 : 1);
         }
-
-        CurrentQuestionIndex++;
+        public int GetTotalScore()
+        {
+            return questions.Take(CurrentQuestionIndex).Sum(q => q.Value);
+        }
     }
-
-    public int GetSincerityScore()
-    {
-        return questions.Where(q => q.Value == -1).Sum(q => q.Value);
-    }
-
-    public int GetTotalScore()
-    {
-        return questions.Sum(q => q.Value);
-    }
-}
 }

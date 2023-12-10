@@ -50,7 +50,7 @@ namespace Forecast
         private void button1_Click(object sender, EventArgs e)
         {
             // Обработка ответа пользователя
-            test.AnswerQuestion(true);
+            test.AnswerQuestion(test.GetCurrentQuestion(), true);
 
             // Загрузка следующего вопроса
             LoadQuestion();
@@ -60,7 +60,7 @@ namespace Forecast
         private void button2_Click(object sender, EventArgs e)
         {
             // Обработка ответа пользователя
-            test.AnswerQuestion(true);
+            test.AnswerQuestion(test.GetCurrentQuestion(), false);
 
             // Загрузка следующего вопроса
             LoadQuestion();
