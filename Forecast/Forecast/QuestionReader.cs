@@ -13,7 +13,7 @@ public class QuestionReader
         HashSet<int> stabilityKeysNegative = new HashSet<int> {2,12,13,14, 19,21,23,24, 28, 30, 38, 39, 46,54,55,58, 61,68};
 
         string[] lines = File.ReadAllLines(filename);
-        string[] updatedLines = lines.Select(line => line.Length > 3 ? line.Substring(3) : "").ToArray();
+        string[] updatedLines = lines.Select(line => line.Length > 3 ? line.Substring(0) : "").ToArray();
 
         List<Question> questions = new List<Question>();
 
