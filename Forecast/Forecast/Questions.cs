@@ -11,7 +11,6 @@ public class Question
     public Question(string text)
     {
         this.Text = text;
-        this.test = test;
     }
 
     // Добавляем функцию для обработки ответов
