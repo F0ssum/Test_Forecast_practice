@@ -1,6 +1,4 @@
 using engine;
-using Forecast;
-using static System.Net.Mime.MediaTypeNames;
 public class Question
 {
     public bool? UserAnswer { get; set; } = null;

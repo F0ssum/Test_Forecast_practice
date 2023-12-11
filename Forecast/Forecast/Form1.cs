@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using engine;
+using System;
 using System.Windows.Forms;
-using engine;
 
 namespace Forecast
 {
@@ -23,6 +16,9 @@ namespace Forecast
 
             // Инициализация теста
             test = new Test("questions.txt");
+
+            // Установка максимального значения ProgressBar
+            progressBar1.Maximum = test.GetTotalQuestions();
 
             // Загрузка первого вопроса
             LoadQuestion();
@@ -52,8 +48,12 @@ namespace Forecast
             // Обработка ответа пользователя
             test.AnswerQuestion(test.GetCurrentQuestion(), true);
 
+            // Обновление ProgressBar
+            progressBar1.Value = test.GetCurrentQuestionIndex();
+
             // Загрузка следующего вопроса
             LoadQuestion();
+
         }
 
 
@@ -62,8 +62,29 @@ namespace Forecast
             // Обработка ответа пользователя
             test.AnswerQuestion(test.GetCurrentQuestion(), false);
 
+            // Обновление ProgressBar
+            progressBar1.Value = test.GetCurrentQuestionIndex();
+
             // Загрузка следующего вопроса
             LoadQuestion();
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            // Проверка, есть ли предыдущий вопрос
+            if (test.GetCurrentQuestionIndex() > 0)
+            {
+                // Уменьшение индекса текущего вопроса
+                test.DecrementQuestionIndex();
+
+                // Загрузка предыдущего вопроса
+                LoadQuestion();
+            }
         }
     }
 }

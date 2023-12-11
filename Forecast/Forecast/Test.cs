@@ -1,42 +1,66 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace engine
 {
-   public class Test
-{
-    private List<Question> questions;
-    public int CurrentQuestionIndex { get; private set; } = 0;
-    private int score = 0;
-
-    public Test(string filename)
+    public class Test
     {
-        questions = QuestionReader.ReadQuestions(filename);
-    }
+        private List<Question> questions;
+        public int CurrentQuestionIndex { get; private set; } = 0;
+        private int score = 0;
 
-    public Question GetCurrentQuestion()
-    {
-        if (CurrentQuestionIndex < questions.Count)
+        public Test(string filename)
         {
-            return questions[CurrentQuestionIndex];
+            questions = QuestionReader.ReadQuestions(filename);
         }
-        else
-        {
-            return null;
-        }
-    }
 
-    public int GetScore()
-    {
-        return score;
-    }
+        public Question GetCurrentQuestion()
+        {
+            if (CurrentQuestionIndex < questions.Count)
+            {
+                return questions[CurrentQuestionIndex];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public int GetTotalQuestions()
+        {
+            return questions.Count;
+        }
+
+        public int GetScore()
+        {
+            return score;
+        }
+
+        public int GetCurrentQuestionIndex()
+        {
+            return CurrentQuestionIndex;
+        }
+
+        public void DecrementQuestionIndex()
+        {
+            if (CurrentQuestionIndex > 0)
+            {
+                CurrentQuestionIndex--;
+            }
+        }
+
 
         public void AnswerQuestion(Question question, bool answer)
         {
+            if (question.UserAnswer.HasValue)
+            {
+                // Если на вопрос уже был дан ответ, отмени предыдущий ответ
+                score -= question.UserAnswer.Value ? question.Value : -question.Value;
+            }
+
+            // Обновите ответ пользователя
             question.UserAnswer = answer;
 
+            // Обработка ответа пользователя
             if (question.Value == -1)
             {
                 // Обработка вопросов, связанных с искренностью
